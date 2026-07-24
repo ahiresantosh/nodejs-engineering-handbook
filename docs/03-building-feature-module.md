@@ -104,9 +104,21 @@ Routes expose API endpoints.
 
 ### Example
 
+#### File : src/users/routes/user.routers.ts
 ```ts
+import { Router } from "express";
+import { userController } from "../controller/user.controller.js";
+
+const router = Router();
+
+// Placeholder for authMiddleware. In a real application, you would import it from your shared middleware folder.
+const authMiddleware = (req: any, res: any, next: any) => next();
+
 router.post("/", authMiddleware, userController.create);
 router.get("/:id", authMiddleware, userController.findById);
+
+export default router;
+
 ```
 
 Routes should never contain business logic.
@@ -126,12 +138,27 @@ Controllers receive HTTP requests and return HTTP responses.
 
 ### Example
 
+#### File : src/users/controller/user.controller.ts
 ```ts
-async create(req, res) {
-    const user = await userService.create(req.body);
+import type { Request, Response, NextFunction } from "express";
 
-    return res.status(201).json(user);
-}
+export const userController = {
+  create: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.status(201).json({ message: "User created" });
+    } catch (error) {
+      next(error);
+    }
+  },
+  findById: async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      res.status(200).json({ message: "User found" });
+    } catch (error) {
+      next(error);
+    }
+  }
+};
+
 ```
 
 Controllers should remain small and readable.
