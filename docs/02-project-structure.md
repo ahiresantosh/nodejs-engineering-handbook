@@ -1,11 +1,3 @@
----
-
----
-title: Chapter 2 – Project Structure & Feature-Based Architecture
-version: 1.0
-author: Engineering Team
----
-
 # Chapter 2 – Project Structure & Feature-Based Architecture
 
 ## Purpose
